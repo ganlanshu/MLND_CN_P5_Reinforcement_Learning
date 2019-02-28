@@ -1,4 +1,6 @@
 import random
+import math
+
 
 class Robot(object):
 
@@ -46,11 +48,12 @@ class Robot(object):
         else:
             # TODO 2. Update parameters when learning
             self.t += 1
-            if self.epsilon < 0.01:
-                self.epsilon = 0.01
-            else:
-                self.epsilon -= self.t*0.1
-
+            #if self.epsilon < 0.01 or self.epsilon > 1:
+            #    self.epsilon = 0.01
+            #else:
+            #    self.epsilon -= np.cos(t) 
+            #self.epsilon = math.cos(self.alpha*self.t) 
+            self.epsilon = 1.0/(self.t+1) 
         return self.epsilon
 
     def sense_state(self):
@@ -129,6 +132,10 @@ class Robot(object):
 
         if self.learning and not self.testing:
             self.update_Qtable(reward, action, next_state) # update q table
-            self.update_parameter() # update parameters
+            if reward == self.maze.reward.get('trap'): # 遇到trap增加随机概率
+                print('hithit2020i-')
+                self.epsilon = self.epsilon0
+            else:
+                self.update_parameter() # update parameters
 
         return action, reward

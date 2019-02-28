@@ -220,7 +220,7 @@ class Maze(object):
         self.reward = {
             "hit_wall": -10.,
             "destination": 50.,
-            "trap": -30.,
+            "trap": -20.,
             "default": -0.1,
         }
 
